@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ProfileModule } from './profile/profile.module';
 import { CategoryModule } from './category/category.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { PaginationModule } from './pagination/pagination.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     ProfileModule,
     CategoryModule,
     ReviewsModule,
+    PaginationModule,
   ],
   providers: [PrismaService]
 })

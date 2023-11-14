@@ -10,7 +10,11 @@ export class ProfileService {
         await this.prisma.profile.create({
             data: {
                 name,
-                userId
+                user: {
+                    connect: {
+                        id: userId
+                    }
+                }
             }
         })
     }
@@ -31,7 +35,7 @@ export class ProfileService {
     }
 
     async change(userId: number, dto: ProfileDto){
-        const profile = await this.get(userId)
+        await this.get(userId)
 
         return this.prisma.profile.update({
             where: {
