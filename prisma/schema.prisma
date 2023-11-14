@@ -13,4 +13,137 @@ model User{
   updatedAt DateTime @updatedAt @map("updated_at")
   email String @unique 
   password String 
+
+  orders Order[]
+
+  companies Company[]
+
+  profile Profile?
+
+  reviews Review[]
+}
+
+model Profile{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name String @unique
+  phone String?
+  city String?
+  address String?
+  image String @default("/static/images/def-profile-img.jpg")
+
+  user User? @relation(fields: [userId], references: [id])
+  userId Int? @unique @map("user_id")
+
+  favorites Favorite[]
+}
+
+model Company{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name String
+  description String?
+  image String @default("/static/images/def-profile-img.jpg")
+
+  user User? @relation(fields: [userId], references: [id])
+  userId Int? @map("user_id")
+
+  products Product[]
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name String @unique
+  description String
+  price Int
+  images String[]
+
+  items OrderItem[]
+
+  company Company? @relation(fields: [companyId], references: [id])
+  companyId Int? @map("company_id")
+
+  category Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int? @map("category_id")
+
+  reviews Review[]
+
+  favorites Favorite[]
+}
+
+model Category{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name String @unique
+
+  products Product[]
+}
+
+model Review{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  rating Int
+  text String
+
+  user User? @relation(fields: [userId], references: [id])
+  userId Int? @map("user_id")
+
+  product Product? @relation(fields: [productId], references: [id])
+  productId Int? @map("product_id")
+}
+
+model Order{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  status EnumOrderStatus @default(PENDING)
+
+  items OrderItem[]
+
+  user User? @relation(fields: [userId], references: [id])
+  userId Int? @map("user_id")
+}
+
+enum EnumOrderStatus{
+  PENDING
+  PAYED
+  SHIPPED
+  DELIVERED
+}
+
+model OrderItem{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  quantity Int
+  price Int
+
+  order Order? @relation(fields: [orderId], references: [id])
+  orderId Int? @map("order_id")
+
+  product Product? @relation(fields: [productId], references: [id])
+  productId Int? @map("product_id")
+}
+
+model Favorite{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  product Product? @relation(fields: [productId], references: [id])
+  productId Int? @map("product_id")
+
+  profile Profile? @relation(fields: [profileId], references: [id])
+  profileId Int? @map("profile_id")
 }

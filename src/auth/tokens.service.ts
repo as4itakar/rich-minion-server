@@ -20,4 +20,8 @@ export class TokensService{
         return {accessToken, refreshToken}
 
     }
+
+    async verifyToken(refreshToken: string){
+        return this.jwt.verifyAsync(refreshToken)
+    }
 }
