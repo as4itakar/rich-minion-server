@@ -45,7 +45,7 @@ model Company{
   updatedAt DateTime @updatedAt @map("updated_at")
   name String
   description String?
-  image String @default("/static/images/def-profile-img.jpg")
+  image String @default("/static/images/def-company-img.jpg")
 
   user User? @relation(fields: [userId], references: [id])
   userId Int? @map("user_id")
@@ -82,7 +82,7 @@ model Category{
   updatedAt DateTime @updatedAt @map("updated_at")
 
   name String @unique
-
+  image String @default("/static/images/def-category-img.jpg")
   products Product[]
 }
 
