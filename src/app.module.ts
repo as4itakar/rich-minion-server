@@ -8,6 +8,7 @@ import { CategoryModule } from './category/category.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { CompanyModule } from './company/company.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CompanyModule } from './company/company.module';
     ReviewsModule,
     PaginationModule,
     CompanyModule,
+    ProductsModule,
   ],
   providers: [PrismaService]
 })
