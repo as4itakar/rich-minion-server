@@ -17,4 +17,7 @@ export class ProductDto{
 
     @IsNumber()
     categoryId: number
+
+    @IsNumber()
+    companyId: number
 }
