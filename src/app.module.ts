@@ -9,6 +9,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { CompanyModule } from './company/company.module';
 import { ProductsModule } from './products/products.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProductsModule } from './products/products.module';
     PaginationModule,
     CompanyModule,
     ProductsModule,
+    RolesModule,
   ],
   providers: [PrismaService]
 })

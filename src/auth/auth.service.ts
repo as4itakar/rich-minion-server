@@ -6,21 +6,38 @@ import { hash } from 'argon2';
 import { TokensService } from './tokens.service';
 import { TokenDto } from './dto/token.dto';
 import { verify } from 'argon2';
+import { RolesService } from 'src/roles/roles.service';
+import { RoleValuesEnum } from 'src/roles/dto/role.dto';
 
 @Injectable()
 export class AuthService {
 
     constructor(private prisma: PrismaService,
         private usersService: UsersService,
-        private tokensService: TokensService){}
+        private tokensService: TokensService,
+        private rolesService: RolesService){}
 
     async register(dto: AuthDto){
-        const existUser = this.usersService.getUserByEmail(dto.email)
+        await this.usersService.getUserByEmail(dto.email)
+
+        const role = await this.rolesService.getRoleByValue(RoleValuesEnum.USER)
 
         const user = await this.prisma.user.create({
             data: {
                 email: dto.email,
-                password: await hash(dto.password)
+                password: await hash(dto.password),
+
+                roles: {
+                    create: [
+                        {
+                            role: {
+                                connect: {
+                                    id: role.id
+                                }
+                            }
+                        }
+                    ]
+                }
             }
         })
 

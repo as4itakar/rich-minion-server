@@ -42,9 +42,6 @@ model UsersRoles{
   role Role @relation(fields: [roleId], references: [id])
   roleId Int @map("role_id")
   
-  assignedAt DateTime @default(now())
-  assignedBy String
-
   @@id([userId, roleId])
 }
 

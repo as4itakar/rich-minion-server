@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import { ArrayMinSize, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class ProductDto{
