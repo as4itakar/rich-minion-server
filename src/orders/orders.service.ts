@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { EnumOrderStatus, OrderItem } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { OrderItemDto } from './dto/order.dto';
 
 @Injectable()
 export class OrdersService {
     constructor(private prisma: PrismaService){}
 
-    async createOrder(userId: number, dto: OrderItem[]){
+    async createOrder(userId: number, dto: OrderItemDto[]){
         const order = await this.prisma.order.create({
             data: {
                 user: {

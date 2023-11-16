@@ -1,8 +1,10 @@
-export class CreateCategoryDto{
-    name: string
-}
+import { IsOptional, IsString } from "class-validator"
 
-export class ChangeCategoryDto{
+export class CategoryDto{
+    @IsString()
     name: string
-    image: string
+
+    @IsOptional()
+    @IsString()
+    image?: string
 }
