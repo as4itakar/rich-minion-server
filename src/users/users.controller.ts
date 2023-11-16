@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { RoleDto, RoleValuesEnum } from 'src/roles/dto/role.dto';
 import { Roles } from 'src/auth/guards/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { UserRoleDto } from './dto/userRole.dto';
 
 @Controller('users')
 export class UsersController {
@@ -12,7 +13,7 @@ export class UsersController {
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
   @Patch('/:id')
-  addRole(@Param('id') id: number, @Body() roleDto: RoleDto){
+  addRole(@Param('id') id: number, @Body() roleDto: UserRoleDto){
     return this.usersService.addNewRole(id, roleDto.value)
   }
 
