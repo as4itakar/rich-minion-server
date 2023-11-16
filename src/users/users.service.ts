@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { hash } from 'argon2';
 import { PrismaService } from 'src/prisma.service';
+import { ProfileService } from 'src/profile/profile.service';
 import { RoleValuesEnum } from 'src/roles/dto/role.dto';
 import { RolesService } from 'src/roles/roles.service';
 
@@ -8,9 +9,10 @@ import { RolesService } from 'src/roles/roles.service';
 export class UsersService {
     
     constructor(private prisma: PrismaService,
-        private rolesService: RolesService){}
+        private rolesService: RolesService,
+        private profileService: ProfileService){}
 
-    async createSimple(email: string, noHashPas: string){
+    async createSimple(email: string, noHashPas: string, name: string){
         const role = await this.rolesService.getRoleByValue(RoleValuesEnum.USER)
 
         const user = await this.prisma.user.create({
@@ -31,6 +33,8 @@ export class UsersService {
                 }
             }
         })
+
+        await this.profileService.create(name, user.id)
 
         return user
     }
