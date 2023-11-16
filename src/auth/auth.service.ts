@@ -14,32 +14,12 @@ export class AuthService {
 
     constructor(private prisma: PrismaService,
         private usersService: UsersService,
-        private tokensService: TokensService,
-        private rolesService: RolesService){}
+        private tokensService: TokensService){}
 
     async register(dto: AuthDto){
         await this.usersService.getUserByEmail(dto.email)
 
-        const role = await this.rolesService.getRoleByValue(RoleValuesEnum.USER)
-
-        const user = await this.prisma.user.create({
-            data: {
-                email: dto.email,
-                password: await hash(dto.password),
-
-                roles: {
-                    create: [
-                        {
-                            role: {
-                                connect: {
-                                    id: role.id
-                                }
-                            }
-                        }
-                    ]
-                }
-            }
-        })
+        const user = await this.usersService.createSimple(dto.email, dto.password)
 
         const tokens = this.tokensService.issueTokens(user.id)
 

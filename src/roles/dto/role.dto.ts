@@ -1,4 +1,4 @@
-import { IsEnum, IsString } from "class-validator";
+import { IsEnum, IsOptional, IsString } from "class-validator";
 
 export enum RoleValuesEnum{
     USER = 'USER',
@@ -13,5 +13,6 @@ export class RoleDto{
     value: RoleValuesEnum
 
     @IsString()
+    @IsOptional()
     description: string
 }
