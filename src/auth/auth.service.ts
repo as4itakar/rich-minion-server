@@ -19,7 +19,7 @@ export class AuthService {
     async register(dto: AuthDto){
         await this.usersService.getUserByEmail(dto.email)
 
-        const user = await this.usersService.createSimple(dto.email, dto.password)
+        const user = await this.usersService.createSimple(dto.email, dto.password, dto.name)
 
         const tokens = this.tokensService.issueTokens(user.id)
 

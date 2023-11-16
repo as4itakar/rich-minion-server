@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { RoleDto, RoleValuesEnum } from 'src/roles/dto/role.dto';
+import { RoleValuesEnum } from 'src/roles/dto/role.dto';
 import { Roles } from 'src/auth/guards/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { UserRoleDto } from './dto/userRole.dto';

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { ChangeCategoryDto, CreateCategoryDto } from './dto/category.dto';
+import { CategoryDto } from './dto/category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -26,7 +26,7 @@ export class CategoryService {
         return categories
     }
 
-    async create(dto: CreateCategoryDto){
+    async create(dto: CategoryDto){
         const category = await this.prisma.category.create({
             data: {
                 ...dto
@@ -34,7 +34,7 @@ export class CategoryService {
         })
     }
 
-    async change(id: number, dto: ChangeCategoryDto){
+    async change(id: number, dto: CategoryDto){
         await this.getById(id)
 
         return await this.prisma.category.update({
