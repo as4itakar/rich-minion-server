@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString } from "class-validator";
+import { IsNumber } from "class-validator";
 
 export enum EnumOrderStatus{
     PENDING = 'PENDING',

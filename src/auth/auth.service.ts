@@ -1,27 +1,23 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto';
-import { PrismaService } from 'src/prisma.service';
 import { UsersService } from 'src/users/users.service';
-import { hash } from 'argon2';
 import { TokensService } from './tokens.service';
 import { TokenDto } from './dto/token.dto';
 import { verify } from 'argon2';
-import { RolesService } from 'src/roles/roles.service';
-import { RoleValuesEnum } from 'src/roles/dto/role.dto';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private prisma: PrismaService,
+    constructor(
         private usersService: UsersService,
         private tokensService: TokensService){}
 
     async register(dto: AuthDto){
-        await this.usersService.getUserByEmail(dto.email)
+        await this.usersService.getUserByEmailAbsence(dto.email)
 
         const user = await this.usersService.createSimple(dto.email, dto.password, dto.name)
 
-        const tokens = this.tokensService.issueTokens(user.id)
+        const tokens = await this.tokensService.issueTokens(user.id, user.email, user.roles)
 
         return {
             user: this.userObj(user.email, user.password),
@@ -31,7 +27,7 @@ export class AuthService {
 
     async login(dto: AuthDto){
         const user = await this.validateUser(dto)
-        const tokens = await this.tokensService.issueTokens(user.id)
+        const tokens = await this.tokensService.issueTokens(user.id, user.email, user.roles)
         
         return {
             user: this.userObj(user.email, user.password),
@@ -44,9 +40,9 @@ export class AuthService {
 
         if (!res) throw new UnauthorizedException('Некорректный токен...')
 
-        const user = await this.usersService.getUserById(res.id)
+        const user = await this.usersService.getUserByEmailAbsence(res.email)
 
-        const tokens = await this.tokensService.issueTokens(user.id)
+        const tokens = await this.tokensService.issueTokens(user.id, user.email, user.roles)
 
         return {
             user: this.userObj(user.email, user.password),
@@ -62,7 +58,7 @@ export class AuthService {
     }
 
     private async validateUser(dto: AuthDto){
-        const existUser = await this.usersService.getUserByEmail(dto.email)
+        const existUser = await this.usersService.getUserByEmailExistence(dto.email)
 
         const isValid = await verify(existUser.password, dto.password)
 

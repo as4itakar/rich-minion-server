@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
+model Users{
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -36,9 +36,9 @@ model Role{
 }
 
 model UsersRoles{
-  user User @relation(fields: [userId], references: [id])
+  user Users @relation(fields: [userId], references: [id])
   userId Int @map("user_id")
-
+  value String 
   role Role @relation(fields: [roleId], references: [id])
   roleId Int @map("role_id")
   
@@ -55,7 +55,7 @@ model Profile{
   address String?
   image String @default("/static/images/def-profile-img.jpg")
 
-  user User? @relation(fields: [userId], references: [id])
+  user Users? @relation(fields: [userId], references: [id])
   userId Int? @unique @map("user_id")
 
   favorites Favorite[]
@@ -69,7 +69,7 @@ model Company{
   description String?
   image String @default("/static/images/def-company-img.jpg")
 
-  user User? @relation(fields: [userId], references: [id])
+  user Users? @relation(fields: [userId], references: [id])
   userId Int @unique @map("user_id")
 
   products Product[]
@@ -116,7 +116,7 @@ model Review{
   rating Int
   text String
 
-  user User? @relation(fields: [userId], references: [id])
+  user Users? @relation(fields: [userId], references: [id])
   userId Int? @map("user_id")
 
   product Product? @relation(fields: [productId], references: [id])
@@ -132,7 +132,7 @@ model Order{
 
   items OrderItem[]
 
-  user User? @relation(fields: [userId], references: [id])
+  user Users? @relation(fields: [userId], references: [id])
   userId Int? @map("user_id")
 }
 

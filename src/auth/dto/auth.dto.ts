@@ -9,6 +9,7 @@ export class AuthDto{
     @IsString()
     password: string
 
+    @IsOptional()
     @IsString()
-    name: string
+    name?: string
 }

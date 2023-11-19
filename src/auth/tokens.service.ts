@@ -6,8 +6,8 @@ export class TokensService{
 
     constructor(private jwt: JwtService){}
 
-    async issueTokens(userId: number){
-        const data = {id: userId}
+    async issueTokens(id: number, email: string, roles: any[]){
+        const data = {id, email, roles}
 
         const accessToken = this.jwt.sign(data, {
             expiresIn: '1h'

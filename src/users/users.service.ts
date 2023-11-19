@@ -15,7 +15,7 @@ export class UsersService {
     async createSimple(email: string, noHashPas: string, name: string){
         const role = await this.rolesService.getRoleByValue(RoleValuesEnum.USER)
 
-        const user = await this.prisma.user.create({
+        const user = await this.prisma.users.create({
             data: {
                 email,
                 password: await hash(noHashPas),
@@ -23,6 +23,7 @@ export class UsersService {
                 roles: {
                     create: [
                         {
+                            value: role.value,
                             role: {
                                 connect: {
                                     id: role.id
@@ -31,6 +32,9 @@ export class UsersService {
                         }
                     ]
                 }
+            },
+            include: {
+                roles: true
             }
         })
 
@@ -42,7 +46,7 @@ export class UsersService {
     async addNewRole(id: number, roleValue: string){
         const role = await this.rolesService.getRoleByValue(roleValue)
 
-        await this.prisma.user.update({
+        await this.prisma.users.update({
             where: {
                 id
             },
@@ -50,6 +54,7 @@ export class UsersService {
                 roles: {
                     create: [
                         {
+                            value: role.value,
                             role: {
                                 connect: {
                                     id: role.id
@@ -64,10 +69,13 @@ export class UsersService {
         return { message: 'Success' }
     }
 
-    async getUserByEmail(email: string){
-        const user = await this.prisma.user.findUnique({
+    async getUserByEmailAbsence(email: string){
+        const user = await this.prisma.users.findUnique({
             where: {
                 email
+            },
+            include: {
+                roles: true
             }
         })
 
@@ -76,8 +84,23 @@ export class UsersService {
         return user
     }
 
+    async getUserByEmailExistence(email: string){
+        const user = await this.prisma.users.findUnique({
+            where: {
+                email
+            },
+            include: {
+                roles: true
+            }
+        })
+
+        if (!user) throw new BadRequestException('Такого пользователя не существует...')
+
+        return user
+    }
+
     async getUserById(id: number){
-        const user = await this.prisma.user.findUnique({
+        const user = await this.prisma.users.findUnique({
             where: {
                 id
             }
@@ -89,7 +112,15 @@ export class UsersService {
     }
 
     async getUsers(){
-        const users = await this.prisma.user.findMany({})
+        const users = await this.prisma.users.findMany({
+            include: {
+                roles: true,
+                company: true,
+                profile: true
+            }
+        })
+
+        console.log(users[0].roles)
 
         if (!users) throw new NotFoundException('Пользователи не найдены')
 

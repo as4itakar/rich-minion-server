@@ -21,8 +21,8 @@ export class CategoryController {
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
   @Put('/:id')
-  changeCategory(@Param('id') categoryId, @Body() productDto: CategoryDto){
-    return this.categoryService.change(categoryId, productDto)
+  changeCategory(@Param('id') categoryId: string, @Body() productDto: CategoryDto){
+    return this.categoryService.change(+categoryId, productDto)
   }
 
   @Get('/:id')

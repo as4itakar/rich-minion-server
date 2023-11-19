@@ -12,9 +12,9 @@ export class UsersController {
   @Roles(RoleValuesEnum.ADMIN)
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
-  @Patch('/:id')
-  addRole(@Param('id') id: number, @Body() roleDto: UserRoleDto){
-    return this.usersService.addNewRole(id, roleDto.value)
+  @Patch('addRole/:id')
+  addRole(@Param('id') id: string, @Body() roleDto: UserRoleDto){
+    return this.usersService.addNewRole(+id, roleDto.value)
   }
 
   @Roles(RoleValuesEnum.ADMIN)

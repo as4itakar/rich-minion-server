@@ -16,8 +16,8 @@ export class ReviewsController {
 
   @Auth()
   @Put('/:id')
-  changeReview(@Param('id') id, @Body() reviewDto: ReviewDto){
-    return this.reviewsService.change(id, reviewDto)
+  changeReview(@Param('id') id: string, @Body() reviewDto: ReviewDto){
+    return this.reviewsService.change(+id, reviewDto)
   }
 
   @Get('/:productId')

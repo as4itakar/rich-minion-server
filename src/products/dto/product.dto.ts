@@ -9,7 +9,7 @@ export class ProductDto{
 
     @IsOptional()
     @IsString()
-    description: string
+    description?: string
 
     @IsString({each: true})
     @ArrayMinSize(1)
