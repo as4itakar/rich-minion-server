@@ -1,8 +1,17 @@
+import { returnProduct } from "src/products/dto/return-product";
+
 export const returnProfile = {
     id: true,
     name: true,
     phone: true,
     city: true, 
     address: true,
-    image: true
+    image: true,
+    select: {
+        favorites: {
+            select: {
+                product: returnProduct
+            }
+        }
+    }
 }

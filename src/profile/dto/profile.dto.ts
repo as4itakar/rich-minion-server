@@ -12,7 +12,4 @@ export class ProfileDto{
     @IsString()
     @IsOptional()
     address?: string
-    @IsString()
-    @IsOptional()
-    image?: string
 }

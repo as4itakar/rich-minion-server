@@ -1,33 +1,25 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UploadedFile, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryDto } from './dto/category.dto';
-import { Roles } from 'src/auth/guards/roles-auth.decorator';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { RoleValuesEnum } from 'src/roles/dto/role.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Roles(RoleValuesEnum.ADMIN)
-  @UseGuards(RolesGuard)
+
   @UsePipes(new ValidationPipe())
   @Post()
-  createCategory(@Body() productDto: CategoryDto){
-    return this.categoryService.create(productDto)
-  }
-
-  @Roles(RoleValuesEnum.ADMIN)
-  @UseGuards(RolesGuard)
-  @UsePipes(new ValidationPipe())
-  @Put('/:id')
-  changeCategory(@Param('id') categoryId: string, @Body() productDto: CategoryDto){
-    return this.categoryService.change(+categoryId, productDto)
+  @UseInterceptors(FileInterceptor('image'))
+  createCategory(@Body() productDto: CategoryDto,
+  @UploadedFile() image: Express.Multer.File
+  ){
+    return this.categoryService.create(productDto, image)
   }
 
   @Get('/:id')
-  getCategory(@Param('id') id: number){
-    return this.categoryService.getById(id)
+  getCategory(@Param('id') id: string){
+    return this.categoryService.getById(+id)
   }
 
   @Get()

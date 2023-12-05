@@ -7,8 +7,4 @@ export class CompanyDto{
     @IsOptional()
     @IsString()
     description?: string
-
-    @IsOptional()
-    @IsString()
-    image?: string
 }

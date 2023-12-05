@@ -1,4 +1,4 @@
-generator client {
+ generator client {
   provider = "prisma-client-js"
 }
 
@@ -53,7 +53,7 @@ model Profile{
   phone String?
   city String?
   address String?
-  image String @default("/static/images/def-profile-img.jpg")
+  image String @default("")
 
   user Users? @relation(fields: [userId], references: [id])
   userId Int? @unique @map("user_id")
@@ -67,7 +67,7 @@ model Company{
   updatedAt DateTime @updatedAt @map("updated_at")
   name String
   description String?
-  image String @default("/static/images/def-company-img.jpg")
+  image String @default("")
 
   user Users? @relation(fields: [userId], references: [id])
   userId Int @unique @map("user_id")
@@ -104,7 +104,8 @@ model Category{
   updatedAt DateTime @updatedAt @map("updated_at")
 
   name String @unique
-  image String @default("/static/images/def-category-img.jpg")
+  image String @default("")
+  isOnBaner Boolean @default(false)
   products Product[]
 }
 
@@ -166,6 +167,6 @@ model Favorite{
   product Product? @relation(fields: [productId], references: [id])
   productId Int? @map("product_id")
 
-  profile Profile? @relation(fields: [profileId], references: [id])
-  profileId Int? @map("profile_id")
+  user Profile? @relation(fields: [userId], references: [id])
+  userId Int? @map("user_id")
 }

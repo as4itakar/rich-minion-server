@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { GetAllProductDto } from './dto/get-all-products.dto';
 import { ProductDto } from './dto/product.dto';
 import { Roles } from 'src/auth/guards/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { RoleValuesEnum } from 'src/roles/dto/role.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { CurrentUser } from 'src/auth/guards/user.decorator';
 
 @Controller('products')
 export class ProductsController {
@@ -16,34 +18,45 @@ export class ProductsController {
     return this.productsService.getAll(queryDto)
   }
 
-  @Get('/:id')
-  getById(@Param('id') id: number){
-    return this.productsService.getById(id)
+  @Get('one/:id')
+  getById(@Param('id') id: string){
+    return this.productsService.getById(+id)
   }
 
-  @Get('/:categoryId')
-  getByCategory(@Param('categoryId') categoryId: number){
-    return this.productsService.getByCategory(categoryId)
+  @Get('category/:categoryId')
+  getByCategory(@Param('categoryId') categoryId: string,
+  @Query() queryDto: GetAllProductDto){
+    return this.productsService.getByCategory(+categoryId, queryDto)
   }
 
-  @Get('/:id')
-  getSimuluar(@Param('id') id: number){
-    return this.productsService.getSimular(id)
+  @Get('company/:companyId')
+  getByCompany(@Param('companyId') companyId: string,
+  @Query() queryDto: GetAllProductDto){
+    return this.productsService.getByCompany(+companyId, queryDto)
+  }
+
+  @Get('/random')
+  getRandom(){
+    return this.productsService.getRandom()
   }
 
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
   @Post()
-  createProduct(@Body() productDto: ProductDto){
-    return this.productsService.create(productDto)
+  @UseInterceptors(FilesInterceptor('images'))
+  createProduct(@CurrentUser('id') id: string, @Body() productDto: ProductDto,
+   @UploadedFiles() images: Array<Express.Multer.File>){
+    return this.productsService.create(productDto, images, +id)
   }
 
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
   @Put('/:id')
-  updateProduct(@Param('id') id: number, @Body() productDto: ProductDto){
-    return this.productsService.update(id, productDto)
+  @UseInterceptors(FilesInterceptor('images'))
+  updateProduct(@Param('id') id: string, @Body() productDto: ProductDto,
+  @UploadedFiles() images: Array<Express.Multer.File>){
+    return this.productsService.update(+id, productDto, images)
   }
 }

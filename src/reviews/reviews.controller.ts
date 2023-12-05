@@ -9,24 +9,18 @@ export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Auth()
-  @Post('/:productId')
-  createReview(@Param('productId') productId: number, @CurrentUser('id') userId, @Body() reviewDto: ReviewDto){
-    return this.reviewsService.create(userId, reviewDto, productId)
-  }
-
-  @Auth()
-  @Put('/:id')
-  changeReview(@Param('id') id: string, @Body() reviewDto: ReviewDto){
-    return this.reviewsService.change(+id, reviewDto)
+  @Post()
+  createReview(@CurrentUser('id') userId: string, @Body() reviewDto: ReviewDto){
+    return this.reviewsService.create(+userId, reviewDto)
   }
 
   @Get('/:productId')
-  getReview(@Param('productId') productId: number){
-    return this.reviewsService.getAll(productId)
+  getReview(@Param('productId') productId: string){
+    return this.reviewsService.getAll(+productId)
   }
 
   @Get('/average/:productId')
-  getAverage(@Param('productId') productId: number){
-    return this.reviewsService.getAverageValue(productId)
+  getAverage(@Param('productId') productId: string){
+    return this.reviewsService.getAverageValue(+productId)
   }
 }

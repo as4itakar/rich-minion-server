@@ -20,7 +20,7 @@ export class AuthService {
         const tokens = await this.tokensService.issueTokens(user.id, user.email, user.roles)
 
         return {
-            user: this.userObj(user.email, user.password),
+            user: this.userObj(user.email, user.id, user.roles),
             ...tokens
         }
     }
@@ -30,7 +30,7 @@ export class AuthService {
         const tokens = await this.tokensService.issueTokens(user.id, user.email, user.roles)
         
         return {
-            user: this.userObj(user.email, user.password),
+            user: this.userObj(user.email, user.id, user.roles),
             ...tokens
         }
     }
@@ -40,20 +40,23 @@ export class AuthService {
 
         if (!res) throw new UnauthorizedException('Некорректный токен...')
 
-        const user = await this.usersService.getUserByEmailAbsence(res.email)
+        const user = await this.usersService.getUserByEmailExistence(res.email)
 
         const tokens = await this.tokensService.issueTokens(user.id, user.email, user.roles)
 
         return {
-            user: this.userObj(user.email, user.password),
+            user: this.userObj(user.email, user.id, user.roles),
             ...tokens
         }
     }
 
-    private userObj(email: string, password: string){
+    private userObj(email: string, id: number, roles: any[]){
+        const cleanedRoles = this.tokensService.changeRole(roles)
+        
         return {
+            id,
             email,
-            password 
+            roles: cleanedRoles
         }
     }
 

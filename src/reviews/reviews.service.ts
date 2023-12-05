@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { ReviewDto } from './dto/review.dto';
+import { returnReview } from './dto/return-review.object';
 
 @Injectable()
 export class ReviewsService {
@@ -11,6 +12,7 @@ export class ReviewsService {
             where: {
                 id
             },
+            select: returnReview
         })
 
         if (!review) throw new BadRequestException('Пользователь не найден...')
@@ -18,13 +20,17 @@ export class ReviewsService {
         return review
     }
 
-    async create(userId: number, dto: ReviewDto, productId: number){
+    async create(userId: number, dto: ReviewDto){
+
+        const {rating, text} = dto
+
         const review = this.prisma.review.create({
             data:{
-                ...dto,
+                rating,
+                text,
                 product: {
                     connect: {
-                        id: productId
+                        id: dto.productId
                     }
                 },
                 user: {
@@ -55,9 +61,16 @@ export class ReviewsService {
         const reviews = await this.prisma.review.findMany({
             where: {
                 productId
-            }
+            },
+            select: returnReview
         })
-        return reviews
+
+        const averageRate = await this.prisma.review.aggregate({
+            where: { productId},
+            _avg: { rating: true }
+        })
+
+        return {reviews, rate: averageRate}
     }
 
     async getAverageValue(productId: number){

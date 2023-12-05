@@ -7,7 +7,10 @@ export class TokensService{
     constructor(private jwt: JwtService){}
 
     async issueTokens(id: number, email: string, roles: any[]){
-        const data = {id, email, roles}
+
+        const newRoles = this.changeRole(roles)
+
+        const data = {id, email, newRoles}
 
         const accessToken = this.jwt.sign(data, {
             expiresIn: '1h'
@@ -23,5 +26,9 @@ export class TokensService{
 
     async verifyToken(refreshToken: string){
         return this.jwt.verifyAsync(refreshToken)
+    }
+
+    changeRole(role: any[]){
+        return role.map( role => role.value)
     }
 }

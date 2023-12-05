@@ -4,4 +4,5 @@ export const returnProduct = {
     description: true,
     price: true,
     images: true,
+    categoryId: true
 }

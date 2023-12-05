@@ -8,8 +8,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
-  @Roles(RoleValuesEnum.ADMIN)
-  @UseGuards(RolesGuard)
+
   @UsePipes(new ValidationPipe())
   @Post()
   create(@Body() roleDto: RoleDto){

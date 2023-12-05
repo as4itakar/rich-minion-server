@@ -9,23 +9,17 @@ import { UserRoleDto } from './dto/userRole.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Roles(RoleValuesEnum.ADMIN)
-  @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
   @Patch('addRole/:id')
   addRole(@Param('id') id: string, @Body() roleDto: UserRoleDto){
     return this.usersService.addNewRole(+id, roleDto.value)
   }
 
-  @Roles(RoleValuesEnum.ADMIN)
-  @UseGuards(RolesGuard)
   @Get()
   getAll(){
     return this.usersService.getUsers()
   }
 
-  @Roles(RoleValuesEnum.ADMIN)
-  @UseGuards(RolesGuard)
   @Get('/:id')
   getOne(@Param('id') id: number){
     return this.usersService.getUserById(id)

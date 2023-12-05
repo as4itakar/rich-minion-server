@@ -1,29 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { OrderItemDto } from './dto/order.dto';
+import { OrderDto } from './dto/order.dto';
+import * as YooKassa from 'yookassa'
+import { returnOrder } from './dto/return-orders.object';
+
+const yooKassa = new YooKassa({
+    shopId: process.env['SHOP_ID'],
+    secretKey: process.env['PAYMENT_TOKEN']
+})
 
 @Injectable()
 export class OrdersService {
     constructor(private prisma: PrismaService){}
 
-    async createOrder(userId: number, dto: OrderItemDto[]){
-        const order = await this.prisma.order.create({
+    async createOrder(dto: OrderDto, userId: number){
+
+        await this.prisma.order.create({
             data: {
+                status: dto.status,
+                items: {
+                    create: dto.items
+                },
                 user: {
                     connect: {
                         id: userId
                     }
-                },
-                items: {
-                    create: dto
                 }
-            },
-            include: {
-                items: true,
             }
         })
 
-        return order
+        return {message: 'Заказ успешно создан'}
     }
 
     async getByUserId(userId: number){
@@ -33,9 +39,9 @@ export class OrdersService {
                     id: userId
                 }
             },
-            include: {
-                items: true
-            }
+            select: returnOrder
         })
+
+        return order
     }
 }

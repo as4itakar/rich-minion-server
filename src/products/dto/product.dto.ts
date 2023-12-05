@@ -1,23 +1,15 @@
-import { ArrayMinSize, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 export class ProductDto{
     @IsString()
     name: string
 
-    @IsNumber()
-    price: number
-
-    @IsOptional()
     @IsString()
-    description?: string
+    price: string
 
-    @IsString({each: true})
-    @ArrayMinSize(1)
-    images: string[]
+    @IsString()
+    description: string
 
-    @IsNumber()
-    categoryId: number
-
-    @IsNumber()
-    companyId: number
+    @IsString()
+    categoryId: string
 }
