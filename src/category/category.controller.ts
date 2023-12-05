@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UploadedFile, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryDto } from './dto/category.dto';
 import { FileInterceptor } from '@nestjs/platform-express';

@@ -1,8 +1,7 @@
-import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { RolesService } from './roles.service';
-import { RoleDto, RoleValuesEnum } from './dto/role.dto';
-import { Roles } from 'src/auth/guards/roles-auth.decorator';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { RoleDto } from './dto/role.dto';
+
 
 @Controller('roles')
 export class RolesController {

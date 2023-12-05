@@ -1,13 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { OrderDto } from './dto/order.dto';
-import * as YooKassa from 'yookassa'
 import { returnOrder } from './dto/return-orders.object';
-
-const yooKassa = new YooKassa({
-    shopId: process.env['SHOP_ID'],
-    secretKey: process.env['PAYMENT_TOKEN']
-})
 
 @Injectable()
 export class OrdersService {

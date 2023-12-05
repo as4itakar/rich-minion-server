@@ -36,8 +36,8 @@ export class CompanyController {
   @Put()
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
-  updateCompany(@CurrentUser('id') id: number, @Body() companyDto: CompanyDto){
-    return this.companyService.change(id, companyDto)
+  updateCompany(@CurrentUser('id') id: string, @Body() companyDto: CompanyDto){
+    return this.companyService.change(+id, companyDto)
   }
 
   @Get('/all')
