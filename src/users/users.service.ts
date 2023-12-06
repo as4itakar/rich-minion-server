@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { hash } from 'argon2';
-import { PrismaService } from 'src/prisma.service';
-import { ProfileService } from 'src/profile/profile.service';
-import { RoleValuesEnum } from 'src/roles/dto/role.dto';
-import { RolesService } from 'src/roles/roles.service';
+import { PrismaService } from '../prisma.service';
+import { ProfileService } from '../profile/profile.service';
+import { RoleValuesEnum } from '../roles/dto/role.dto';
+import { RolesService } from '../roles/roles.service';
 
 @Injectable()
 export class UsersService {

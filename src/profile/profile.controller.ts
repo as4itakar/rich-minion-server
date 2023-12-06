@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Patch, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ProfileService } from './profile.service';
-import { CurrentUser } from 'src/auth/guards/user.decorator';
+import { CurrentUser } from '../auth/guards/user.decorator';
 import { ProfileDto } from './dto/profile.dto';
-import { Auth } from 'src/auth/guards/auth.decorator';
+import { Auth } from '../auth/guards/auth.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('profile')

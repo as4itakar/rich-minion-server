@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CompanyService } from './company.service';
-import { CurrentUser } from 'src/auth/guards/user.decorator';
+import { CurrentUser } from '../auth/guards/user.decorator';
 import { CompanyDto } from './dto/company.dto';
-import { Auth } from 'src/auth/guards/auth.decorator';
-import { Roles } from 'src/auth/guards/roles-auth.decorator';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { RoleValuesEnum } from 'src/roles/dto/role.dto';
+import { Auth } from '../auth/guards/auth.decorator';
+import { Roles } from '../auth/guards/roles-auth.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { RoleValuesEnum } from '../roles/dto/role.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('company')

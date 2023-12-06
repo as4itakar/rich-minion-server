@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { PrismaService } from 'src/prisma.service';
+import { PaginationService } from '../pagination/pagination.service';
+import { PrismaService } from '../prisma.service';
 import { EnumProductSort, GetAllProductDto } from './dto/get-all-products.dto';
 import { Prisma } from '@prisma/client';
 import { ProductDto } from './dto/product.dto';
 import { returnProduct } from './dto/return-product';
-import { FileService } from 'src/file/file.service';
-import { CompanyService } from 'src/company/company.service';
+import { FileService } from '../file/file.service';
+import { CompanyService } from '../company/company.service';
 
 @Injectable()
 export class ProductsService {

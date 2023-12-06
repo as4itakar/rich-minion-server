@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { TokensService } from './tokens.service';
 import { TokenDto } from './dto/token.dto';
 import { verify } from 'argon2';

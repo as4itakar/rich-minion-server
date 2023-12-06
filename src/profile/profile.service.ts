@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { ProfileDto } from './dto/profile.dto';
-import { returnProduct } from 'src/products/dto/return-product';
-import { FileService } from 'src/file/file.service';
+import { returnProduct } from '../products/dto/return-product';
+import { FileService } from '../file/file.service';
 
 
 @Injectable()

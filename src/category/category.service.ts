@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { CategoryDto } from './dto/category.dto';
-import { FileService } from 'src/file/file.service';
+import { FileService } from '../file/file.service';
 import { returnCategory } from './dto/return-category';
 
 @Injectable()

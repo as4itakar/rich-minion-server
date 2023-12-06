@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { ReviewDto } from './dto/review.dto';
-import { CurrentUser } from 'src/auth/guards/user.decorator';
-import { Auth } from 'src/auth/guards/auth.decorator';
+import { CurrentUser } from '../auth/guards/user.decorator';
+import { Auth } from '../auth/guards/auth.decorator';
 
 @Controller('reviews')
 export class ReviewsController {

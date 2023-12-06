@@ -1,4 +1,4 @@
-import { returnProduct } from "src/products/dto/return-product"
+import { returnProduct } from "../../products/dto/return-product"
 
 export const returnOrderItems = {
     id: true,

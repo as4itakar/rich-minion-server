@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CompanyController } from './company.controller';
-import { PrismaService } from 'src/prisma.service';
-import { UsersModule } from 'src/users/users.module';
-import { FileModule } from 'src/file/file.module';
+import { PrismaService } from '../prisma.service';
+import { UsersModule } from '../users/users.module';
+import { FileModule } from '../file/file.module';
 
 @Module({
   controllers: [CompanyController],

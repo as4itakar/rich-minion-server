@@ -2,8 +2,8 @@ import { Module, forwardRef } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { RolesModule } from 'src/roles/roles.module';
-import { ProfileModule } from 'src/profile/profile.module';
-import { PrismaService } from 'src/prisma.service';
+import { ProfileModule } from '../profile/profile.module';
+import { PrismaService } from '../prisma.service';
 
 @Module({
   controllers: [UsersController],

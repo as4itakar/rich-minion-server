@@ -2,11 +2,11 @@ import { Body, Controller, Get, Param, Post, Put, Query, UploadedFiles, UseGuard
 import { ProductsService } from './products.service';
 import { GetAllProductDto } from './dto/get-all-products.dto';
 import { ProductDto } from './dto/product.dto';
-import { Roles } from 'src/auth/guards/roles-auth.decorator';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { RoleValuesEnum } from 'src/roles/dto/role.dto';
+import { Roles } from '../auth/guards/roles-auth.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { RoleValuesEnum } from '../roles/dto/role.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { CurrentUser } from 'src/auth/guards/user.decorator';
+import { CurrentUser } from '../auth/guards/user.decorator';
 
 @Controller('products')
 export class ProductsController {

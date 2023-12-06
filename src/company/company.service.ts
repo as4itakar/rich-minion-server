@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { CompanyDto } from './dto/company.dto';
-import { UsersService } from 'src/users/users.service';
-import { RoleValuesEnum } from 'src/roles/dto/role.dto';
-import { FileService } from 'src/file/file.service';
+import { UsersService } from '../users/users.service';
+import { RoleValuesEnum } from '../roles/dto/role.dto';
+import { FileService } from '../file/file.service';
 import { returnCompany } from './dto/return-company';
 
 @Injectable()
