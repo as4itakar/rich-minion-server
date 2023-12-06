@@ -18,5 +18,5 @@
             ]
         }
     ],
-    "buildCommand": "npx prisma generate && npx prisma db push && nest build"
+    "buildCommand": "npx prisma db push && npx prisma generate && npx nest build"
 }
