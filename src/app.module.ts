@@ -13,6 +13,7 @@ import { RolesModule } from './roles/roles.module';
 import { OrdersModule } from './orders/orders.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { join } from 'path';
     ProductsModule,
     RolesModule,
     OrdersModule,
+    FileModule,
     ServeStaticModule.forRoot({
           rootPath: join(__dirname, 'static')
     })
