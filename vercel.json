@@ -18,5 +18,6 @@
             ]
         }
     ],
-    "buildCommand": "npx prisma generate && nest build"
+    "buildCommand": "npx prisma generate && nest build",
+    "installCommand": "npx prisma generate && npm install"
 }
