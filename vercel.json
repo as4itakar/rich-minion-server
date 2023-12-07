@@ -14,9 +14,13 @@
                 "GET",
                 "POST",
                 "PUT",
-                "DELETE"
+                "DELETE",
+                "PATCH"
             ]
         }
+    ],
+    "rewrites": [
+        {"source": "/(.*)", "destination": "/"}
     ],
     "buildCommand": "npx nest build",
     "installCommand": "npm install"
