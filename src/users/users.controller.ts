@@ -2,22 +2,22 @@ import { Body, Controller, Get, Param, Patch, UseGuards, UsePipes, ValidationPip
 import { UsersService } from './users.service';
 import { UserRoleDto } from './dto/userRole.dto';
 
-@Controller('users')
+@Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @UsePipes(new ValidationPipe())
-  @Patch('addRole/:id')
+  @Patch('/users/addRole/:id')
   addRole(@Param('id') id: string, @Body() roleDto: UserRoleDto){
     return this.usersService.addNewRole(+id, roleDto.value)
   }
 
-  @Get()
+  @Get('/users')
   getAll(){
     return 'asdasds'
   }
 
-  @Get('/:id')
+  @Get('/users/:id')
   getOne(@Param('id') id: string){
     return this.usersService.getUserById(+id)
   }

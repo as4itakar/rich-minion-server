@@ -3,13 +3,13 @@ import { RolesService } from './roles.service';
 import { RoleDto } from './dto/role.dto';
 
 
-@Controller('roles')
+@Controller()
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
 
   @UsePipes(new ValidationPipe())
-  @Post()
+  @Post('roles')
   create(@Body() roleDto: RoleDto){
     return this.rolesService.create(roleDto)
   }

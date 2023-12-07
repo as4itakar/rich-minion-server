@@ -4,22 +4,22 @@ import { ReviewDto } from './dto/review.dto';
 import { CurrentUser } from '../auth/guards/user.decorator';
 import { Auth } from '../auth/guards/auth.decorator';
 
-@Controller('reviews')
+@Controller()
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Auth()
-  @Post()
+  @Post('/reviews')
   createReview(@CurrentUser('id') userId: string, @Body() reviewDto: ReviewDto){
     return this.reviewsService.create(+userId, reviewDto)
   }
 
-  @Get('/:productId')
+  @Get('/reviews/:productId')
   getReview(@Param('productId') productId: string){
     return this.reviewsService.getAll(+productId)
   }
 
-  @Get('/average/:productId')
+  @Get('/reviews/average/:productId')
   getAverage(@Param('productId') productId: string){
     return this.reviewsService.getAverageValue(+productId)
   }

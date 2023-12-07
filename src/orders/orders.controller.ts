@@ -4,19 +4,19 @@ import { CurrentUser } from '../auth/guards/user.decorator';
 import { OrderDto } from './dto/order.dto';
 import { Auth } from '../auth/guards/auth.decorator';
 
-@Controller('orders')
+@Controller()
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Auth()
   @UsePipes(new ValidationPipe())
-  @Post()
+  @Post('/orders')
   create(@CurrentUser('id') id: string, @Body() orderDto: OrderDto){
     return this.ordersService.createOrder(orderDto, +id)
   }
 
   @Auth()
-  @Get()
+  @Get('/orders')
   get(@CurrentUser('id') id: string){
     console.log(id)
     return this.ordersService.getByUserId(+id)

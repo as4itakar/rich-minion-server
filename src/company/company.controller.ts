@@ -8,12 +8,12 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { RoleValuesEnum } from '../roles/dto/role.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-@Controller('company')
+@Controller()
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Auth()
-  @Get()
+  @Get('/company')
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   getCompany(@CurrentUser('id') id: string){
@@ -23,7 +23,7 @@ export class CompanyController {
 
   @Auth()
   @UsePipes(new ValidationPipe())
-  @Post()
+  @Post('/company')
   @UseInterceptors(FileInterceptor('image'))
   createCompany(@CurrentUser('id') id: string, 
   @Body() companyDto: CompanyDto,
@@ -33,20 +33,20 @@ export class CompanyController {
 
   @Auth()
   @UsePipes(new ValidationPipe())
-  @Put()
+  @Put('/company')
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   updateCompany(@CurrentUser('id') id: string, @Body() companyDto: CompanyDto){
     return this.companyService.change(+id, companyDto)
   }
 
-  @Get('/all')
+  @Get('/company/all')
   getCompanies(){
     return this.companyService.getAll()
   }
 
 
-  @Get('/one/:id')
+  @Get('/company/one/:id')
   getById(@Param('id') id: string){
     return this.companyService.getById(+id)
   }

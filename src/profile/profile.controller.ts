@@ -5,18 +5,18 @@ import { ProfileDto } from './dto/profile.dto';
 import { Auth } from '../auth/guards/auth.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-@Controller('profile')
+@Controller()
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Auth()
-  @Get()
+  @Get('/profile')
   getProfile(@CurrentUser('id') id: string){
     return this.profileService.get(+id)
   }
 
   @Auth()
-  @Put()
+  @Put('/profile')
   @UseInterceptors(FileInterceptor('image'))
   changeProfile(@CurrentUser('id') id: string, 
       @Body() profileDto: ProfileDto, @UploadedFile() image: Express.Multer.File){
@@ -24,13 +24,13 @@ export class ProfileController {
   }
 
   @Auth()
-  @Patch('/favorites/:productId')
+  @Patch('/profile/togglefav/:productId')
   toggleFav(@CurrentUser('id') id: string, @Param('productId') productId: string){
     return this.profileService.toggleFavorite(+id, +productId)
   }
 
   @Auth()
-  @Get('/favorites/:productId')
+  @Get('/profile/favorites/:productId')
   getFavorites(@CurrentUser('id') id: string, @Param('productId') productId: string){
     return this.profileService.getFavorite(+id, +productId)
   }

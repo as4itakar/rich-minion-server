@@ -8,34 +8,34 @@ import { RoleValuesEnum } from '../roles/dto/role.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../auth/guards/user.decorator';
 
-@Controller('products')
+@Controller()
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @UsePipes(new ValidationPipe())
-  @Get()
+  @Get('/products')
   getAll(@Query() queryDto: GetAllProductDto){
     return this.productsService.getAll(queryDto)
   }
 
-  @Get('one/:id')
+  @Get('/products/one/:id')
   getById(@Param('id') id: string){
     return this.productsService.getById(+id)
   }
 
-  @Get('category/:categoryId')
+  @Get('/products/categories/:categoryId')
   getByCategory(@Param('categoryId') categoryId: string,
   @Query() queryDto: GetAllProductDto){
     return this.productsService.getByCategory(+categoryId, queryDto)
   }
 
-  @Get('company/:companyId')
+  @Get('/products/companies/:companyId')
   getByCompany(@Param('companyId') companyId: string,
   @Query() queryDto: GetAllProductDto){
     return this.productsService.getByCompany(+companyId, queryDto)
   }
 
-  @Get('/random')
+  @Get('/products/random')
   getRandom(){
     return this.productsService.getRandom()
   }
@@ -43,7 +43,7 @@ export class ProductsController {
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
-  @Post()
+  @Post('/products')
   @UseInterceptors(FilesInterceptor('images'))
   createProduct(@CurrentUser('id') id: string, @Body() productDto: ProductDto,
    @UploadedFiles() images: Array<Express.Multer.File>){
@@ -53,7 +53,7 @@ export class ProductsController {
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
-  @Put('/:id')
+  @Put('/products/change/:id')
   @UseInterceptors(FilesInterceptor('images'))
   updateProduct(@Param('id') id: string, @Body() productDto: ProductDto,
   @UploadedFiles() images: Array<Express.Multer.File>){
