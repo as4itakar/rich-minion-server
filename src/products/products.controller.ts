@@ -13,7 +13,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @UsePipes(new ValidationPipe())
-  @Get('/products')
+  @Get('products')
   getAll(@Query() queryDto: GetAllProductDto){
     return this.productsService.getAll(queryDto)
   }
@@ -23,13 +23,13 @@ export class ProductsController {
     return this.productsService.getById(+id)
   }
 
-  @Get('/products/categories/:categoryId')
+  @Get('/products/category/:categoryId')
   getByCategory(@Param('categoryId') categoryId: string,
   @Query() queryDto: GetAllProductDto){
     return this.productsService.getByCategory(+categoryId, queryDto)
   }
 
-  @Get('/products/companies/:companyId')
+  @Get('/products/company/:companyId')
   getByCompany(@Param('companyId') companyId: string,
   @Query() queryDto: GetAllProductDto){
     return this.productsService.getByCompany(+companyId, queryDto)
@@ -53,7 +53,7 @@ export class ProductsController {
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
-  @Put('/products/change/:id')
+  @Put('/products/:id')
   @UseInterceptors(FilesInterceptor('images'))
   updateProduct(@Param('id') id: string, @Body() productDto: ProductDto,
   @UploadedFiles() images: Array<Express.Multer.File>){

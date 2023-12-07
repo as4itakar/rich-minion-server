@@ -24,7 +24,7 @@ export class ProfileController {
   }
 
   @Auth()
-  @Patch('/profile/togglefav/:productId')
+  @Patch('/profile/favorites/:productId')
   toggleFav(@CurrentUser('id') id: string, @Param('productId') productId: string){
     return this.profileService.toggleFavorite(+id, +productId)
   }

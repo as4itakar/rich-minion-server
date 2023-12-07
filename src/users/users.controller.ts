@@ -14,7 +14,7 @@ export class UsersController {
 
   @Get('/users')
   getAll(){
-    return 'asdasds'
+    return this.usersService.getUsers()
   }
 
   @Get('/users/:id')
