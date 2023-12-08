@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { GetAllProductDto } from './dto/get-all-products.dto';
 import { ProductDto } from './dto/product.dto';
@@ -58,5 +58,12 @@ export class ProductsController {
   updateProduct(@Param('id') id: string, @Body() productDto: ProductDto,
   @UploadedFiles() images: Array<Express.Multer.File>){
     return this.productsService.update(+id, productDto, images)
+  }
+
+  @Roles(RoleValuesEnum.OWNER)
+  @UseGuards(RolesGuard)
+  @Delete('/products/:id')
+  deleteProduct(@Param('id') id: string){
+    return this.productsService.delete(+id)
   }
 }

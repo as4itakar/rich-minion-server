@@ -202,4 +202,14 @@ export class ProductsService {
 
         return pages
     }
+
+    async delete(id: number){
+        await this.prisma.product.delete({
+            where: {
+                id
+            }
+        })
+
+        return {message: 'Продукт успешно удален'}
+    }
 }
