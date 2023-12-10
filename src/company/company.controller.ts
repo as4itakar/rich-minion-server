@@ -17,7 +17,6 @@ export class CompanyController {
   @Roles(RoleValuesEnum.OWNER)
   @UseGuards(RolesGuard)
   getCompany(@CurrentUser('id') id: string){
-    console.log('asd')
     return this.companyService.getByUserId(+id)
   } 
 

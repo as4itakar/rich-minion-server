@@ -18,7 +18,6 @@ export class OrdersController {
   @Auth()
   @Get('/orders')
   get(@CurrentUser('id') id: string){
-    console.log(id)
     return this.ordersService.getByUserId(+id)
   }
 }
